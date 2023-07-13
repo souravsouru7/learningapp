@@ -45,7 +45,12 @@
     
     
             <p>
-              <a href="#" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+              <a href="{% url 'newapp:payment' pk=sin.pk %}" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+              <a href="{% url 'newapp:show_video' pk=sin.pk %}" class="btn btn-primary">Watch Video</a>
+
+              <!-- Your main template -->
+              
+
             </p>
           </div>
         </div>
