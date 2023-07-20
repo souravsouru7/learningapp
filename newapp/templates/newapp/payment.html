@@ -1,44 +1,51 @@
 {% load static %}
 
 <!-- payment.html -->
-<h1>Payment Details</h1>  <!-- Display the payment amount -->
-
-
-
-<button type="submit" class="btn btn-outline-success btn-block" id="rzp-button1">Pay</button>
+<!-- payment.html -->
+<form id="payment-form" method="POST" action="{% url 'newapp:payment_success' pk=product_pk %}">
+    {% csrf_token %}
+    <h1>Payment Details</h1>
+    <!-- Display the payment amount -->
+  
+    <button type="submit" class="btn btn-outline-success btn-block" id="rzp-button1">Pay</button>
+  </form>
+  
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     var options = {
-    "key": "{{ razorpay_key }}",
-    "amount": {{ order.amount }},
-    "currency": "INR",
-    "name": "Your Website Name",
-    "description": "Payment for Order #{{ order.id }}",
-    "image": "{% static 'images/logo.png' %}",
-    "prefill": {
-      "name": "{{ user.username }}",
-      "email": "{{ user.email }}"
-    },
-    "handler": function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
-    },
+        "key": "{{ razorpay_key }}",
+        "amount": {{ order.amount }},
+        "currency": "INR",
+        "name": "Your Website Name",
+        "description": "Payment for Order #{{ order.id }}",
+        "image": "{% static 'images/logo.png' %}",
+        "prefill": {
+            "name": "{{ user.username }}",
+            "email": "{{ user.email }}"
+        },
+        "handler": function(response) {
+            // Store the payment details and redirect to a custom page
+            var paymentForm = document.getElementById("payment-form");
+            var razorpayPaymentIdInput = document.createElement("input");
+            razorpayPaymentIdInput.setAttribute("type", "hidden");
+            razorpayPaymentIdInput.setAttribute("name", "razorpay_payment_id");
+            razorpayPaymentIdInput.setAttribute("value", response.razorpay_payment_id);
+            paymentForm.appendChild(razorpayPaymentIdInput);
+
+            paymentForm.submit();
+        },
+        "prefill": {
+            "name": "{{ user.username }}",
+            "email": "{{ user.email }}"
+        }
     };
     var rzp1 = new Razorpay(options);
     rzp1.on('payment.failed', function (response) {
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+        console.log(response.error);
     });
     document.getElementById('rzp-button1').onclick = function (e) {
         rzp1.open();
         e.preventDefault();
-    }
+    };
 </script>
-

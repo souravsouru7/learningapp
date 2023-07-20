@@ -43,7 +43,7 @@
   
   <div class="custom-breadcrumns border-bottom">
     <div class="container">
-      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'newapp:index' %}">Home</a>
       <span class="mx-3 icon-keyboard_arrow_right"></span>
       <span class="current">Login</span>
     </div>
@@ -53,7 +53,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-5">
-          <form method="post" action="{% url 'login' %}">
+          <form method="post" action="{% url 'newapp:login' %}">
             {% csrf_token %}
             <div class="row">
               <div class="col-md-12 form-group">

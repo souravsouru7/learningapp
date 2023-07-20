@@ -45,13 +45,28 @@
     
     
             <p>
-              <a href="{% url 'newapp:payment' pk=sin.pk %}" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
-              <a href="{% url 'newapp:show_video' pk=sin.pk %}" class="btn btn-primary">Watch Video</a>
-
-              <!-- Your main template -->
               
+          
+          <!-- <a href="{% url 'newapp:show_video' pk=sin.pk %}" class="btn btn-primary">Watch Video</a> -->
+          
+  
+          <a href="{% url 'newapp:payment' pk=sin.pk %}" class="btn btn-primary rounded-0 btn-lg px-5">Enroll</a>
+              <!-- course-single.html -->
 
-            </p>
+<!-- Existing content -->
+
+{% if payment_status %}
+<p>Payment Status: Paid</p>
+{% else %}
+<p>Payment Status: Unpaid</p>
+{% endif %}
+
+<!-- Update the "Watch Video" button -->
+<a id="watch-video-button" href="{% url 'newapp:show_video' pk=sin.pk %}" class="btn btn-primary" {% if not payment_status %}style="display: none;"{% endif %}>Watch Video</a>
+
+<!-- Remaining content -->
+
+
           </div>
         </div>
       </div>
@@ -137,7 +152,18 @@
         </div>
       </div>
     </div>
+    <script>
+      // Retrieve the payment status from the template
+      var paymentStatus = {{ payment_status|yesno:"true,false" }};
     
+      // Toggle the visibility of the "Watch Video" button based on the payment status
+      var watchVideoButton = document.getElementById('watch-video-button');
+      if (paymentStatus) {
+        watchVideoButton.style.display = 'block';
+      } else {
+        watchVideoButton.style.display = 'none';
+      }
+    </script>
 
   </div>
   <!-- .site-wrap -->

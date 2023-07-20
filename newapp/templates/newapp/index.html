@@ -108,8 +108,8 @@
                           <div class="card-body">
                               <h4 class="card-title" style="font-weight: bold;">{{ item.name }}</h4>
                               <p class="card-text">{{ item.description|truncatechars_html:50 }}</p>
-                              <a href="{% url 'newapp:single' item.id %}" class="btn btn-primary">Detail view</a>
-                              <a href="#" class="btn btn-primary">buy</a>
+                              <a href="{% url 'newapp:singlecourse_detail' item.id %}" class="btn btn-primary">Detail view</a>
+                              <a href="{% url 'newapp:singlecourse_detail' item.id %}" class="btn btn-primary">buy</a>
                           </div>
                       </div>
                   </div>

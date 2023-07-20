@@ -1,0 +1,22 @@
+<!-- profile_edit.html -->
+
+{% extends 'newapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-4 mx-auto">
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ user.username }}</h5>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
